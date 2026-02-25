@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertProjectSchema, insertBlogPostSchema, insertMessageSchema, insertAboutPageSchema, insertAboutCardSchema, insertSocialLinkSchema } from "@shared/schema";
 import { z } from "zod";
-import { registerObjectStorageRoutes } from "./replit_integrations/object_storage";
+import { uploadRouter } from "./uploads";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -162,8 +162,8 @@ export async function registerRoutes(
     res.json({ message: "Deleted" });
   });
 
-  // ── File Upload (Object Storage) ──
-  registerObjectStorageRoutes(app);
+  // ── File Upload (Local) ──
+  app.use(uploadRouter);
 
   // ── Settings (CV, etc.) ──
   const allowedSettingsKeys = ["cv_url"];

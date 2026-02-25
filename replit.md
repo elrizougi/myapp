@@ -40,6 +40,7 @@ Preferred communication style: Simple, everyday language.
 ### Server Directory Structure
 - `server/index.ts` — Express app setup, middleware, HTTP server creation
 - `server/routes.ts` — API route registration
+- `server/uploads.ts` — Local file upload handling with multer (saves to `uploads/` directory)
 - `server/storage.ts` — Data access layer (interface + PostgreSQL implementation)
 - `server/db.ts` — Database connection pool setup
 - `server/seed.ts` — Database seeding script with sample Arabic/English content
@@ -79,6 +80,14 @@ All content tables have bilingual fields (Arabic and English versions).
 - **drizzle-kit** — Database migration and push tooling
 - **connect-pg-simple** — PostgreSQL session store (available but not actively used for auth)
 
+### File Uploads
+- **multer** — Handles multipart/form-data file uploads
+- Files are saved to a local `uploads/` directory (configurable via `UPLOAD_DIR` env var, defaults to `process.cwd()/uploads`)
+- Upload routes: `POST /api/uploads/request-url` returns upload config, `POST /api/uploads` accepts files
+- Served statically at `/uploads/<filename>`
+- Allowed types: images (JPEG, PNG, GIF, WebP, SVG) and PDF; max 25MB
+- For Docker: mount a volume at `/app/uploads` to persist files
+
 ### Key NPM Packages
 - **Express 5** — HTTP server framework
 - **Vite** — Frontend build tool and dev server
@@ -88,6 +97,7 @@ All content tables have bilingual fields (Arabic and English versions).
 - **drizzle-zod** — Generates Zod schemas from Drizzle table definitions
 - **wouter** — Lightweight client-side routing
 - **react-hook-form** — Form state management with `@hookform/resolvers` for Zod integration
+- **multer** — Multipart form data / file upload middleware
 - **Radix UI** — Headless UI component primitives (full suite installed)
 - **Tailwind CSS v4** — Utility-first CSS framework via `@tailwindcss/vite` plugin
 - **class-variance-authority (CVA)** — Component variant styling
