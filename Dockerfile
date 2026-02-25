@@ -14,14 +14,18 @@ RUN npm run build
 # ===== runtime =====
 FROM node:20-alpine AS runtime
 WORKDIR /app
+
+# انسخ ملفات npm أولاً
+COPY package*.json ./
+
+# ثبّت كل الاعتمادات (بما فيها dev) قبل تفعيل production
+RUN npm ci --include=dev
+
+# الآن فعّل production للتشغيل
 ENV NODE_ENV=production
 
-# نحتاج package.json لتشغيل npm start
-COPY package*.json ./
+# انسخ ناتج البناء
 COPY --from=build /app/dist ./dist
-
-# تثبيت production deps فقط
-RUN npm ci
 
 EXPOSE 3000
 CMD ["npm", "run", "start"]
