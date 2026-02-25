@@ -1,0 +1,15 @@
+node_modules
+dist
+build
+.out
+.vite
+coverage
+
+.env
+.env.*
+!.env.example
+
+*.log
+*.sql
+backups/
+data/

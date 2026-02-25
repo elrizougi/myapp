@@ -1,0 +1,203 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --font-sans: 'Tajawal', 'Inter', sans-serif;
+  --font-heading: 'Cairo', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  --background: 233 50% 6%;
+  --foreground: 220 20% 90%;
+  
+  --card: 233 40% 10%;
+  --card-foreground: 220 20% 90%;
+  
+  --popover: 233 40% 10%;
+  --popover-foreground: 220 20% 90%;
+  
+  --primary: 239 84% 67%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 233 35% 14%;
+  --secondary-foreground: 220 20% 85%;
+  
+  --muted: 233 30% 12%;
+  --muted-foreground: 220 15% 55%;
+  
+  --accent: 270 60% 55%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 63% 45%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --border: 233 25% 16%;
+  --input: 233 25% 16%;
+  --ring: 239 84% 67%;
+  
+  --radius: 0.5rem;
+  
+  --chart-1: 239 84% 67%;
+  --chart-2: 270 60% 55%;
+  --chart-3: 330 70% 60%;
+  --chart-4: 190 80% 50%;
+  --chart-5: 160 60% 45%;
+  
+  --sidebar: 233 50% 6%;
+  --sidebar-foreground: 220 20% 90%;
+  --sidebar-primary: 239 84% 67%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 233 35% 14%;
+  --sidebar-accent-foreground: 220 20% 85%;
+  --sidebar-border: 233 25% 16%;
+  --sidebar-ring: 239 84% 67%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-sans antialiased;
+    background: linear-gradient(135deg, #0a0a1a 0%, #111132 30%, #0d0d2b 60%, #0a0a1a 100%);
+    background-attachment: fixed;
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+  }
+  .container {
+    margin-inline: auto;
+  }
+}
+
+/* Hero section animations */
+.hero-glow-ring {
+  position: relative;
+  box-shadow: 0 0 60px rgba(99, 102, 241, 0.3), 0 0 100px rgba(139, 92, 246, 0.15);
+}
+
+.hero-glow-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(from var(--ring-angle, 0deg), #6366f1, #8b5cf6, #ec4899, #06b6d4, #6366f1);
+  z-index: 0;
+  animation: ring-rotate 4s linear infinite;
+}
+
+.hero-glow-ring::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #0a0a1a;
+  z-index: 1;
+}
+
+.hero-glow-ring > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes ring-rotate {
+  to { --ring-angle: 360deg; }
+}
+
+@property --ring-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.animate-float-slow {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.animate-float-fast {
+  animation: float 3.5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-ping-slow {
+  animation: ping-slow 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes ping-slow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Glass card effect */
+.glass-card {
+  background: rgba(17, 17, 50, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.25);
+  background: rgba(17, 17, 50, 0.8);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.08);
+}
