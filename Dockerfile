@@ -21,7 +21,7 @@ COPY package*.json ./
 COPY --from=build /app/dist ./dist
 
 # تثبيت production deps فقط
-RUN npm ci --omit=dev
+RUN npm ci
 
 EXPOSE 3000
 CMD ["npm", "run", "start"]
